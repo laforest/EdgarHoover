@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 """
-Common Functions
+Common Functions for serial ports and iRobot Open Interface
 """
 
 import serial
@@ -13,7 +13,8 @@ def Init_Port(name, baudrate = 57600):
                          parity   = serial.PARITY_NONE,
                          stopbits = serial.STOPBITS_ONE,
                          xonxoff  = False,
-                         timeout  = None) # What if Create hangs, but not brain?
+                         # What if Create hangs, but not the brain?
+                         timeout  = None) 
     def send(byte_list):
         return port.write(bytes(byte_list))
 
