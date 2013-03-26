@@ -17,7 +17,7 @@ def ACK():
         return True
     return False
 
-def Init_I2C():
+def I2C_Init():
     send([USB_ISS, ISS_MODE, I2C_H_100KHZ, IO_MODE])
     return ACK() 
 
