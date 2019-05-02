@@ -3,8 +3,6 @@
 """
 Implements the I2C adn UART functionality of the Devantech USB-ISS module
 See: http://robot-electronics.co.uk/htm/usb_iss_tech.htm
-You will see lots of seemingly unnecessary assignments.
-These are to convert bytes() objects into int() objects.
 Parameters are ints, but internally all data area bytes since the
 file is opened in binary mode.
 """
@@ -16,7 +14,7 @@ class USB_ISS:
     def open (self):
         """
         No buffering to have a completely dumb terminal device
-        Reads/writes work in bytes(), so must convert to/from int as necessary
+        Reads/writes work in bytes().
         """
         self.fd = open(self.device, mode = "r+b", buffering = 0)
 
@@ -63,6 +61,7 @@ class USB_ISS:
         command = bytes([0x58, address])
         self.fd.write(command)
         is_present = self.fd.read(1)
+        # byte to int
         is_present = is_present[0]
         return is_present
 
@@ -79,7 +78,7 @@ class USB_ISS:
         command = bytes([0x55, address, register, count])
         self.fd.write(command)
         read_val = self.fd.read(count)
-        return list(read_val)
+        return read_val
 
     def i2c_write (self, address, register, *data):
         # Data should be <= 60 bytes (internal buffer)
@@ -88,18 +87,20 @@ class USB_ISS:
         command = bytes([0x55, address, register, count] + data)
         self.fd.write(command)
         retval = self.fd.read(1)
+        # byte to int
         retval = retval[0]
         return retval
 
     def uart_command (self, write_data = []):
         """Starts a SERIAL_IO command. len(write_data) must be <= 30."""
-        # so we can write no data when reading
+        # send empty list so we can write no data when reading
         command = bytes([0x62] + write_data)
         self.fd.write(command)
 
     def uart_status (self):
         """Ends the 0x62 (SERIAL_IO) command."""
         status_bytes  = self.fd.read(3)
+        # byte to int
         status  = status_bytes[0]
         txcount = status_bytes[1]
         rxcount = status_bytes[2]
