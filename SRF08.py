@@ -18,13 +18,13 @@ class SRF08:
 
     def set_gain (self, gain):
         if gain < 1 or gain > 31:
-            print("Error: gain out of range")
+            print("Error: gain {0} out of range".format(gain))
             sys.exit
         self.interface.i2c_write(self.address, 0x01, gain)
 
     def set_range (self, max_range):
         if max_range < 0 or max_range > 255:
-            print("Error: max range out over limits")
+            print("Error: max range {0} outside limits".format(max_range))
             sys.exit
         self.interface.i2c_write(self.address, 0x02, max_range)
 
@@ -34,7 +34,8 @@ class SRF08:
         
     def read_light (self):
         light = self.interface.i2c_read(self.address, 0x01, 1)
-        self.light = int.from_bytes(light, "little")
+        # byte to int
+        self.light = light[0]
         return light
     
     def read_ranges (self):
