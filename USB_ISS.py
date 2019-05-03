@@ -36,7 +36,7 @@ class USB_ISS:
         # Nothing works when device is not open (like UART receive)
         # so always open immediately
         self.open()
-        self.get_config()
+        self.set_i2c_serial_mode()
 
     def close (self):
         """All settings lost on close."""
