@@ -14,9 +14,9 @@ class Open_Interface:
     """
 
 
-    def __init__ (self, self.send_function, self.receive_function):
-        self.send       = self.send_function
-        self.receive    = self.receive_function
+    def __init__ (self, send_function, receive_function):
+        self.send       = send_function
+        self.receive    = receive_function
         self.sensors    = bytearray()
 
     def join(msb, lsb):
@@ -188,11 +188,11 @@ class Open_Interface:
         """+/-128 degC"""
         return unpack('b', self.sensors[21:22])
 
-    def Battery_Charge (self)
+    def Battery_Charge (self):
         """Estimated current battery charge: 0-64k mAh"""
         return unpack('H', self.sensors[22:24])
 
-    def Battery_Capacity (self)
+    def Battery_Capacity (self):
         """Estimated current battery capacity: 0-64k mAh"""
         return unpack('H', self.sensors[24:26])
 
