@@ -1,8 +1,8 @@
 #! /usr/bin/python3
 
-from USB_ISS        import USB_ISS
-from Open_Interface import Open_Interface
-from time           import sleep
+from Communication_Interfaces   import Communication_Interfaces
+from Open_Interface             import Open_Interface
+from time                       import sleep
 
 def test (OI):
     OI.Start()
@@ -15,7 +15,7 @@ def test (OI):
     OI.Start()
 
 if __name__ == "__main__":
-    UI = USB_ISS()
-    OI = Open_Interface(UI.uart_write, UI.uart_read)
+    CI = Communication_Interfaces()
+    OI = Open_Interface(CI.uart_write, CI.uart_read)
     test(OI)
 
