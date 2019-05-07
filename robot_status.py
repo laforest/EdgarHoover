@@ -1,9 +1,9 @@
 #! /usr/bin/python3
 
-import Communication_Interfaces
-import Open_Interface
-import SRF08
-from time import sleep
+from Communication_Interfaces   import Communication_Interfaces
+from Open_Interface             import Open_Interface
+from SRF08                      import SRF08
+from time                       import sleep
 import os
 
 def robot_status(OI, SRL, SRR):
