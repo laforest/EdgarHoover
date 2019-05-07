@@ -19,10 +19,10 @@ class Open_Interface:
         self.receive    = receive_function
         self.sensors    = bytearray()
 
-    def join(msb, lsb):
+    def join(self, msb, lsb):
         return (msb << 8 | lsb)
 
-    def split(value):
+    def split(self, value):
         value_lower = value & 0xFF
         value_upper = (value >> 8) & 0xFF
         return (value_upper, value_lower)
