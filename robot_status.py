@@ -8,13 +8,7 @@ import os
 
 def robot_status(OI, SRL, SRR):
     SRL.do_ranging()
-    SRL.read_light()
-    SRL.read_ranges()
-
     SRR.do_ranging()
-    SRR.read_light()
-    SRR.read_ranges()
-
     OI.Get_All_Sensors()
     bump_left  = OI.Bump_Left()
     bump_right = OI.Bump_Right()
@@ -25,18 +19,9 @@ def robot_status(OI, SRL, SRR):
 
 if __name__ == "__main__":
     CI  = Communication_Interfaces()
-
-    OI  = Open_Interface(CI.uart_write, CI.uart_read)
-    OI.Start()
-    OI.Full()
-
+    OI  = Open_Interface(CI.uart_read, CI.uart_write)
     SRL = SRF08(CI.i2c_read, CI.i2c_write, 0x72)
-    SRL.set_gain(0)
-    SRL.set_range(140)
-
     SRR = SRF08(CI.i2c_read, CI.i2c_write, 0x76)
-    SRR.set_gain(0)
-    SRR.set_range(140)
 
     os.system('clear')
     while (True):
