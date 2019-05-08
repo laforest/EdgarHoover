@@ -13,11 +13,13 @@ class Open_Interface:
          https://www.manualslib.com/manual/396738/Irobot-Create-Open-Interface.html
     """
 
-
-    def __init__ (self, send_function, receive_function):
+    def __init__ (self, receive_function, send_function):
         self.send       = send_function
         self.receive    = receive_function
         self.sensors    = bytearray()
+        # Start and disable motion safeties (complete control)
+        self.Start()
+        self.Full()
 
     def join(self, msb, lsb):
         return (msb << 8 | lsb)
@@ -233,5 +235,22 @@ class Open_Interface:
         """
         return unpack('B', self.sensors[40:41])[0]
 
-    # Skipped remaining commands (song status/number, last requested radius/velocities)
+    # Skipped song status/number/stream commands (bytes 41-43)
+
+    def Last_Drive_Velocity (self):
+        """+500 to -500 mm/s"""
+        return unpack('h', self.sensors[44:46])[0] 
+
+    def Last_Drive_Radius (self):
+        """+32k to -32k mm"""
+        return unpack('h', self.sensors[46:48])[0] 
+
+    def Last_Right_Velocity (self):
+        """+500 to -500 mm/s"""
+        return unpack('h', self.sensors[48:50])[0] 
+
+    def Last_Right_Velocity (self):
+        """+500 to -500 mm/s"""
+        return unpack('h', self.sensors[50:52])[0] 
+
 
