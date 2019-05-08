@@ -10,17 +10,26 @@ class SRF08:
     Assumes an interface providing i2c_read and i2c_write. 
     """
 
-    def __init__ (self, i2c_read, i2c_write, address):
+    def __init__ (self, i2c_read, i2c_write, address, gain = 0, sonar_range = 140):
+        """Defaults to 6m range (max usable) and minimum gain."""
         self.i2c_read   = i2c_read
         self.i2c_write  = i2c_write
         self.address    = address
         self.ranges     = None
         self.light      = None
+        self.set_gain(gain)
+        self.set_range(sonar_range)
+
+    def set_i2c_address (self, new_address):
+        self.i2c_write(self.address, 0x00, 0xA0) 
+        self.i2c_write(self.address, 0x00, 0xAA) 
+        self.i2c_write(self.address, 0x00, 0xA5) 
+        self.i2c_write(self.address, 0x00, new_address) 
 
     def set_gain (self, gain):
-        if gain < 1 or gain > 31:
+        if gain < 0 or gain > 31:
             print("Error: gain {0} out of range".format(gain))
-            sys.exit
+            sys.exit()
         self.i2c_write(self.address, 0x01, gain)
 
     def set_range (self, max_range):
@@ -29,15 +38,10 @@ class SRF08:
             sys.exit
         self.i2c_write(self.address, 0x02, max_range)
 
-    def do_ranging (self):
-        self.i2c_write(self.address, 0x00, 0x51)
-        time.sleep(0.070) # wait at least 70ms for ranging to finish
-        
     def read_light (self):
         light = self.i2c_read(self.address, 0x01, 1)
         # byte to int
         self.light = light[0]
-        return light
     
     def read_ranges (self):
         ranges = []
@@ -48,11 +52,10 @@ class SRF08:
             this_range = int.from_bytes(this_range, "little")
             ranges.append(this_range)
         self.ranges = ranges
-        return ranges
 
-    def set_i2c_address (self, new_address):
-        self.i2c_write(self.address, 0x00, 0xA0) 
-        self.i2c_write(self.address, 0x00, 0xAA) 
-        self.i2c_write(self.address, 0x00, 0xA5) 
-        self.i2c_write(self.address, 0x00, new_address) 
-
+    def do_ranging (self):
+        self.i2c_write(self.address, 0x00, 0x51)
+        time.sleep(0.070) # wait at least 70ms for ranging to finish
+        self.read_light()
+        self.read_ranges()
+        
