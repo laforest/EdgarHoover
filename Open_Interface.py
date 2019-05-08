@@ -88,15 +88,15 @@ class Open_Interface:
     def Get_All_Sensors (self):
         """Get all the sensor data (52 bytes in packet 6)"""
         self.send([142, 6])
-        raw_sensors = self.receive(52)
+        self.sensors = self.receive(52)
 
     # Must use slices even for single bytes else they convert to ints prematurely.
 
     def Bump_Right (self):
-        return unpack('B', self.sensors[0:1]) & 0x1
+        return unpack('B', self.sensors[0:1])[0] & 0x1
 
     def Bump_Left (self):
-        return (unpack('B', self.sensors[0:1]) & 0x2) >> 1
+        return (unpack('B', self.sensors[0:1])[0] & 0x2) >> 1
 
     def Wheeldrop_Right (self):
         return (unpack('B', self.sensors[0]) & 0x4) >> 2
