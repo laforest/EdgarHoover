@@ -99,71 +99,71 @@ class Open_Interface:
         return (unpack('B', self.sensors[0:1])[0] & 0x2) >> 1
 
     def Wheeldrop_Right (self):
-        return (unpack('B', self.sensors[0]) & 0x4) >> 2
+        return (unpack('B', self.sensors[0])[0] & 0x4) >> 2
 
     def Wheeldrop_Left (self):
-        return (unpack('B', self.sensors[0]) & 0x8) >> 3
+        return (unpack('B', self.sensors[0])[0] & 0x8) >> 3
 
     def Wheeldrop_Caster (self):
-        return (unpack('B', self.sensors[0:1]) & 0x10) >> 4
+        return (unpack('B', self.sensors[0:1])[0] & 0x10) >> 4
 
     def Wall_Seen (self):
-        return unpack('?', self.sensors[1:2])
+        return unpack('?', self.sensors[1:2])[0]
 
     def Cliff_Seen_Left (self):
-        return unpack('?', self.sensors[2:3])
+        return unpack('?', self.sensors[2:3])[0]
 
     def Cliff_Seen_Front_Left (self):
-        return unpack('?', self.sensors[3:4])
+        return unpack('?', self.sensors[3:4])[0]
 
     def Cliff_Seen_Front_Right (self):
-        return unpack('?', self.sensors[4:5])
+        return unpack('?', self.sensors[4:5])[0]
 
     def Cliff_Seen_Right (self):
-        return unpack('?', self.sensors[5:6])
+        return unpack('?', self.sensors[5:6])[0]
 
     def Virtual_Wall_Seen (self):
-        return unpack('?', self.sensors[6:7])
+        return unpack('?', self.sensors[6:7])[0]
 
     def Overcurrent_LSD0 (self):
         """Low Side Driver 0, 0.5A"""
-        return unpack('B', self.sensors[7:8]) & 0x1
+        return unpack('B', self.sensors[7:8])[0] & 0x1
 
     def Overcurrent_LSD1 (self):
         """Low Side Driver 1, 0.5A"""
-        return (unpack('B', self.sensors[7:8]) & 0x2) >> 1
+        return (unpack('B', self.sensors[7:8])[0] & 0x2) >> 1
 
     def Overcurrent_LSD2 (self):
         """Low Side Driver 2, 1.6A"""
-        return (unpack('B', self.sensors[7:8]) & 0x4) >> 2
+        return (unpack('B', self.sensors[7:8])[0] & 0x4) >> 2
 
     def Overcurrent_Right_Wheel (self):
         """1.0A"""
-        return (unpack('B', self.sensors[7:8]) & 0x8) >> 3
+        return (unpack('B', self.sensors[7:8])[0] & 0x8) >> 3
 
     def Overcurrent_Left_Wheel (self):
         """1.0A"""
-        return (unpack('B', self.sensors[7:8]) & 0x10) >> 4
+        return (unpack('B', self.sensors[7:8])[0] & 0x10) >> 4
 
     # Bytes 8 and 9 are always 0 (packet 15 and 16)
 
     def IR_Byte (self):
         """See Open Interface doc, pg.18, for meaning of byte"""
-        return unpack('B', self.sensors[10:11])
+        return unpack('B', self.sensors[10:11])[0]
 
     def Button_Play_Pressed (self):
-        return unpack('B', self.sensors[11:12]) & 0x1
+        return unpack('B', self.sensors[11:12])[0] & 0x1
 
     def Button_Advance_Pressed (self):
-        return (unpack('B', self.sensors[11:12]) & 0x4) >> 2
+        return (unpack('B', self.sensors[11:12])[0] & 0x4) >> 2
 
     def Last_Distance (self):
         """Distance travelled since last call to this function. Capped to +/-32k mm."""
-        return unpack('h', self.sensors[12:14])
+        return unpack('h', self.sensors[12:14])[0]
 
     def Last_Angle (self):
         """Angle turned since last call to this function. Capped to +/-32k degrees. CCW positive, CW negative."""
-        return unpack('h', self.sensors[14:16])
+        return unpack('h', self.sensors[14:16])[0]
 
     def Charging_State (self):
         """
@@ -174,55 +174,55 @@ class Open_Interface:
         4 Waiting
         5 Charging Fault Condition
         """
-        return unpack('B', self.sensors[16:17])
+        return unpack('B', self.sensors[16:17])[0]
 
     def Battery_Voltage (self):
         """0-64k mV"""
-        return unpack('H', self.sensors[17:19])
+        return unpack('H', self.sensors[17:19])[0]
 
     def Battery_Current (self):
         """+/-32k mA, negative is discharging, positive is charging"""
-        return unpack('H', self.sensors[19:21])
+        return unpack('H', self.sensors[19:21])[0]
 
     def Battery_Temperature (self):
         """+/-128 degC"""
-        return unpack('b', self.sensors[21:22])
+        return unpack('b', self.sensors[21:22])[0]
 
     def Battery_Charge (self):
         """Estimated current battery charge: 0-64k mAh"""
-        return unpack('H', self.sensors[22:24])
+        return unpack('H', self.sensors[22:24])[0]
 
     def Battery_Capacity (self):
         """Estimated current battery capacity: 0-64k mAh"""
-        return unpack('H', self.sensors[24:26])
+        return unpack('H', self.sensors[24:26])[0]
 
     def Wall_Signal (self):
         """Wall sensor. 0-4k"""
-        return unpack('H', self.sensors[26:28]) 
+        return unpack('H', self.sensors[26:28])[0] 
 
     def Cliff_Left_Signal (self):
         """Left cliff sensor. 0-4k"""
-        return unpack('H', self.sensors[28:30]) 
+        return unpack('H', self.sensors[28:30])[0] 
 
     def Cliff_Front_Left_Signal (self):
         """Front left cliff sensor. 0-4k"""
-        return unpack('H', self.sensors[30:32]) 
+        return unpack('H', self.sensors[30:32])[0] 
 
     def Cliff_Front_Right_Signal (self):
         """Front right cliff sensor. 0-4k"""
-        return unpack('H', self.sensors[32:34]) 
+        return unpack('H', self.sensors[32:34])[0] 
 
     def Cliff_Right_Signal (self):
         """Right cliff sensor. 0-4k"""
-        return unpack('H', self.sensors[34:36]) 
+        return unpack('H', self.sensors[34:36])[0] 
 
     # Skipped implementing the digital (byte 36) and analog (bytes 37-38) I/O pins here.
 
     def Charging_Home_Base (self):
-        return (unpack('B', self.sensors[39:40]) & 0x2) >> 1
+        return (unpack('B', self.sensors[39:40])[0] & 0x2) >> 1
 
     def Charging_Internal (self):
-        return (unpack('B', self.sensors[39:40]) & 0x1)
+        return (unpack('B', self.sensors[39:40])[0] & 0x1)
 
     def OI_Mode (self):
         """
@@ -231,7 +231,7 @@ class Open_Interface:
         2 Safe
         3 Full
         """
-        return unpack('B', self.sensors[40:41])
+        return unpack('B', self.sensors[40:41])[0]
 
     # Skipped remaining commands (song status/number, last requested radius/velocities)
 
