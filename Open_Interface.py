@@ -101,10 +101,10 @@ class Open_Interface:
         return (unpack('B', self.sensors[0:1])[0] & 0x2) >> 1
 
     def Wheeldrop_Right (self):
-        return (unpack('B', self.sensors[0])[0] & 0x4) >> 2
+        return (unpack('B', self.sensors[0:1])[0] & 0x4) >> 2
 
     def Wheeldrop_Left (self):
-        return (unpack('B', self.sensors[0])[0] & 0x8) >> 3
+        return (unpack('B', self.sensors[0:1])[0] & 0x8) >> 3
 
     def Wheeldrop_Caster (self):
         return (unpack('B', self.sensors[0:1])[0] & 0x10) >> 4
@@ -184,7 +184,7 @@ class Open_Interface:
 
     def Battery_Current (self):
         """+/-32k mA, negative is discharging, positive is charging"""
-        return unpack('H', self.sensors[19:21])[0]
+        return unpack('h', self.sensors[19:21])[0]
 
     def Battery_Temperature (self):
         """+/-128 degC"""
