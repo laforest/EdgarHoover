@@ -249,7 +249,7 @@ class Open_Interface:
         """+500 to -500 mm/s"""
         return unpack('h', self.sensors[48:50])[0] 
 
-    def Last_Right_Velocity (self):
+    def Last_Left_Velocity (self):
         """+500 to -500 mm/s"""
         return unpack('h', self.sensors[50:52])[0] 
 
