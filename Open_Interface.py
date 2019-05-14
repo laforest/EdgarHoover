@@ -53,7 +53,7 @@ class Open_Interface:
         (radius_msb, radius_lsb) = self.split(radius)
         return self.send([137, velocity_msb, velocity_lsb, radius_msb, radius_lsb])
 
-    def Drive_Direct (self, right_wheel = 0, left_wheel = 0):
+    def Drive_Direct (self, left_wheel = 0, right_wheel = 0):
         """Range: -32768 to 32767 -> -500 to 500 mm/s, positive values go forward"""
         (left_wheel_msb, left_wheel_lsb) = self.split(left_wheel)
         (right_wheel_msb, right_wheel_lsb) = self.split(right_wheel)
