@@ -5,11 +5,7 @@ from Open_Interface             import Open_Interface
 from SRF08                      import SRF08
 from time                       import sleep
 import os
-
-def drive_wheels (OI, left, right):
-    left  = sum(left)
-    right = sum(right)
-    OI.Drive_Direct(left, right)
+import sys
 
 def wander (OI, SRL, SRR):
     SRL.do_ranging()
@@ -22,13 +18,12 @@ def wander (OI, SRL, SRR):
     next_nearest_left    = SRL.ranges[1]
     next_nearest_right   = SRR.ranges[1]
 
-    to_left     = 600 - nearest_left
-    to_right    = 600 - nearest_right
+    left        = next_nearest_right - (next_nearest_right - nearest_right)
+    right       = next_nearest_left  - (next_nearest_left  - nearest_left)
 
-    left        = to_left   + next_nearest_right
-    right       = to_right  + next_nearest_left
+    print(nearest_left, nearest_right, next_nearest_left, next_nearest_right, left, right)
 
-    drive_wheels(OI, left, right)
+    OI.Drive_Direct(left, right)
 
 #    print("SRL light: {0}\tRanges: {1}".format(SRL.light, SRL.ranges))
 #    print("SRR light: {0}\tRanges: {1}".format(SRR.light, SRR.ranges))
@@ -57,7 +52,7 @@ if __name__ == "__main__":
 
     while (True):
         wander(OI, SRL, SRR)
-        if (OI.Button_Play_Pressed() == True):
+        if (OI.Wheeldrop_Caster() == True):
             OI.Start()
             sys.exit()
 
